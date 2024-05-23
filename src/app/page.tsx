@@ -1,103 +1,128 @@
+import Navbar from "@/components/Navbar";
+import NoCases from "@/components/NoCases";
+import Sag from "@/components/Sag";
 import db from "@/db/db";
 import FetchData from "@/lib/fetcher";
-import Image from "next/image";
 
 export default async function Home() {
 
-  let cases = await db.sag.findMany()
+  let cases = await db.sag.findMany({
+      where: {
+        OR: [
+          { typeid: { in: [3, 5, 9] } },
+          { periodeId: 160 }
+        ]
+      }
+    })
 
   if (!cases) {
     const response =  await FetchData("/api/fetchData")
-    cases = await db.sag.findMany()
+    cases = await db.sag.findMany({
+      where: {
+        OR: [
+          { typeid: { in: [3, 5, 9] } },
+          { periodeId: 160 }
+        ]
+      }
+    })
   }
 
+  const kanban1 = cases.filter((item: any) => {
+    return item.statusid == 1;
+  })
 
-  // cases = cases.filter((item: any) => {
-  //   return (item.typeid == 3 || item.typeid == 5 || item.typeid == 9 || item.periodeid == 160);
-  // })
+  const kanban2 = cases.filter((item: any) => {
+    return item.statusid == 3;
+  })
+
+  const kanban3 = cases.filter((item: any) => {
+    return item.statusid == 0;
+  })
+
+  const kanban4 = cases.filter((item: any) => {
+    return item.statusid == 0;
+  })
+
+  const kanban5 = cases.filter((item: any) => {
+    return item.statusid == 11;
+  })
 
   return (
     <>
-      <nav className="w-full p-5 border-b px-10 flex">
-        <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Seal_of_the_Folketing_of_Denmark.svg/2048px-Seal_of_the_Folketing_of_Denmark.svg.png" alt="Folketinget" width={55} height={55}></Image>
-        <div className="ml-4">
-          <h2 className="font-bold text-xl">Law Overview</h2>
-          <p>Lov og beslutningsforslag i folketinget</p>
-        </div>
-      </nav>
+      <Navbar></Navbar>
       <div className="flex justify-center">
-        <div className="grid grid-cols-5 gap-5 px-10 py-5">
+        <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 px-10 py-10">
 
           <div className="flex flex-col gap-5">
-            <div>
+            <div className="flex">
               <h1 className="font-bold text-lg">Fremsat</h1>
-              {
-                cases.filter((item: any) => {
-                  return item.statusid == 1;
-                }).map((item: any, index: number) => {
+              <div className="px-5 py-1 ml-2 text-sm bg-gray-900 text-white rounded-lg m-0">{kanban1.length}</div>
+            </div>
+            {
+                kanban1.length == 0 ? <NoCases></NoCases> :
+                kanban1.map((item: any, index: number) => {
                   return (
-                    <div className="border rounded-xl p-5" key={index}>
-                      <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
-                        <p>{item.nummer}</p>
-                      </div>
-                      <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
-                    </div>
+                    <Sag key={index} number={item.nummer} title={item.titel}></Sag>
                   )
                 })
               }
-            </div>
-           
           </div>
 
           <div className="flex flex-col gap-5">
-            <div>
+            <div className="flex">
               <h1 className="font-bold text-lg">1. Behandling</h1>
+              <div className="px-5 py-1 ml-2 text-sm bg-gray-900 text-white rounded-lg m-0">{kanban2.length}</div>
             </div>
             {
-                cases.filter((item: any) => {
-                  return item.statusid == 3;
-                }).map((item: any, index: number) => {
+                kanban2.length == 0 ? <NoCases></NoCases> :
+                kanban2.map((item: any, index: number) => {
                   return (
-                    <div className="border rounded-xl p-5" key={index}>
-                      <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
-                        <p>{item.nummer}</p>
-                      </div>
-                      <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
-                    </div>
+                    <Sag key={index} number={item.nummer} title={item.titel}></Sag>
                   )
                 })
             }
           </div>
 
           <div className="flex flex-col gap-5">
-            <div>
+            <div className="flex">
               <h1 className="font-bold text-lg">2. Behandling</h1>
-            </div>
-          
-          </div>
-
-          <div className="flex flex-col gap-5">
-            <div>
-              <h1 className="font-bold text-lg">3. Behandling</h1>
-            </div>
-          
-          </div>
-
-          <div className="flex flex-col gap-5">
-            <div>
-              <h1 className="font-bold text-lg">Godkendt</h1>
+              <div className="px-5 py-1 ml-2 text-sm bg-gray-900 text-white rounded-lg m-0">{kanban3.length}</div>
             </div>
             {
-                cases.filter((item: any) => {
-                  return item.statusid == 11;
-                }).map((item: any, index: number) => {
+                kanban3.length == 0 ? <NoCases></NoCases> :
+                kanban3.map((item: any, index: number) => {
                   return (
-                    <div className="border rounded-xl p-5" key={index}>
-                      <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
-                        <p>{item.nummer}</p>
-                      </div>
-                      <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
-                    </div>
+                    <Sag key={index} number={item.nummer} title={item.titel}></Sag>
+                  )
+                })
+            }
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <div className="flex">
+              <h1 className="font-bold text-lg">3. Behandling</h1>
+              <div className="px-5 py-1 ml-2 text-sm bg-gray-900 text-white rounded-lg m-0">{kanban4.length}</div>
+            </div>
+            {
+                kanban4.length == 0 ? <NoCases></NoCases> :
+                kanban4.map((item: any, index: number) => {
+                  return (
+                    <Sag key={index} number={item.nummer} title={item.titel}></Sag>
+                  )
+                })
+            }
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <div className="flex">
+              <h1 className="font-bold text-lg">Godkendt</h1>
+              <div className="px-5 py-1 ml-2 text-sm bg-gray-900 text-white rounded-lg m-0">{kanban5.length}</div>
+            </div>
+            {
+                kanban5.length == 0 ? <NoCases></NoCases> :
+                kanban5.map((item: any, index: number) => {
+                  return (
+                    <Sag key={index} number={item.nummer} title={item.titel}></Sag>
                   )
                 })
             }
