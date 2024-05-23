@@ -11,6 +11,11 @@ export default async function Home() {
     cases = await db.sag.findMany()
   }
 
+
+  // cases = cases.filter((item: any) => {
+  //   return (item.typeid == 3 || item.typeid == 5 || item.typeid == 9 || item.periodeid == 160);
+  // })
+
   return (
     <>
       <nav className="w-full p-5 border-b px-10 flex">
@@ -26,42 +31,54 @@ export default async function Home() {
           <div className="flex flex-col gap-5">
             <div>
               <h1 className="font-bold text-lg">Fremsat</h1>
+              {
+                cases.filter((item: any) => {
+                  return item.statusid == 1;
+                }).map((item: any, index: number) => {
+                  return (
+                    <div className="border rounded-xl p-5" key={index}>
+                      <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
+                        <p>{item.nummer}</p>
+                      </div>
+                      <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
+                    </div>
+                  )
+                })
+              }
             </div>
            
           </div>
 
           <div className="flex flex-col gap-5">
             <div>
-              <h1 className="font-bold text-lg">1. behandling</h1>
+              <h1 className="font-bold text-lg">1. Behandling</h1>
             </div>
             {
-                cases.map((item: any, index: number) => {
-                  if (item.typeid == 3 || item.typeid == 5 || item.typeid == 9 || item.periodeid == 160) {        
-                    if (item.statusid == 3) {
-                      return (
-                        <div className="border rounded-xl p-5" key={index}>
-                          <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
-                            <p>{item.nummer}</p>
-                          </div>
-                          <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
-                        </div>
-                      )
-                    } 
-                  }
+                cases.filter((item: any) => {
+                  return item.statusid == 3;
+                }).map((item: any, index: number) => {
+                  return (
+                    <div className="border rounded-xl p-5" key={index}>
+                      <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
+                        <p>{item.nummer}</p>
+                      </div>
+                      <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
+                    </div>
+                  )
                 })
             }
           </div>
 
           <div className="flex flex-col gap-5">
             <div>
-              <h1 className="font-bold text-lg">2. behandling</h1>
+              <h1 className="font-bold text-lg">2. Behandling</h1>
             </div>
           
           </div>
 
           <div className="flex flex-col gap-5">
             <div>
-              <h1 className="font-bold text-lg">3. behandling</h1>
+              <h1 className="font-bold text-lg">3. Behandling</h1>
             </div>
           
           </div>
@@ -71,19 +88,17 @@ export default async function Home() {
               <h1 className="font-bold text-lg">Godkendt</h1>
             </div>
             {
-                cases.map((item: any, index: number) => {
-                  if (item.typeid == 3 || item.typeid == 5 || item.typeid == 9 || item.periodeid == 160 && item.statusid == 11) {         
-                    if (item.statusid == 11) {
-                      return (
-                        <div className="border rounded-xl p-5" key={index}>
-                          <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
-                            <p>{item.nummer}</p>
-                          </div>
-                          <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
-                        </div>
-                      )
-                    } 
-                  }
+                cases.filter((item: any) => {
+                  return item.statusid == 11;
+                }).map((item: any, index: number) => {
+                  return (
+                    <div className="border rounded-xl p-5" key={index}>
+                      <div className="bg-red-500 px-2 py-1 mb-2 rounded-xl w-fit text-white text-sm">
+                        <p>{item.nummer}</p>
+                      </div>
+                      <h1 className="line-clamp-2 font-bold tetx-lg">{item.titel}</h1>
+                    </div>
+                  )
                 })
             }
           </div>
