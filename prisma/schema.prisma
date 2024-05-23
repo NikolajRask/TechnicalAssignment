@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+    id Int @id @default(autoincrement())
+    username String
+}
+
+model Sag { 
+  id Int @id
+  typeid Int?
+  kategoriid Int?
+  statusid Int?
+  titel String?
+  titelkort String?
+  offentlighedskode String?
+  nummer String?
+  nummerprefix String?
+  nummernumerisk String?
+  nummerpostfix String?
+  resume String?
+  afstemningskonklusion String?
+  periodeId Int?
+  afgorelsesresultatkode String?
+  baggrundsmateriale String?
+  opdateringsdato String?
+  statsbudgetsag Boolean?
+  begrundelse String?
+  paragrafnummer Int?
+  paragraf String?
+  afgorelsesdato String?
+  afgorelse String?
+  radsmodedato String?
+  lovnummer String?
+  lovnummerdato String?
+  retsinformationsurl String?
+  fremsatundersagid String?
+  deltundersagid String?
+}

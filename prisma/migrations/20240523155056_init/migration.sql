@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Sag" ALTER COLUMN "typeid" DROP NOT NULL,
+ALTER COLUMN "kategoriid" DROP NOT NULL,
+ALTER COLUMN "statusid" DROP NOT NULL;

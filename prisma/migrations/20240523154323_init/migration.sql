@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Sag" ALTER COLUMN "id" DROP DEFAULT;
+DROP SEQUENCE "sag_id_seq";
